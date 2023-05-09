@@ -6,7 +6,6 @@ from tkinter import messagebox
 import threading
 import fsm
 
-
 fsm = fsm.FiniteStateMachine()
 fsm.createState("login", ["gameloop", "wait"])
 fsm.createState("gameloop", ["wait"])
@@ -31,6 +30,7 @@ client = ClienteInfo()
 sock = ""
 clientSocket = ""
 waitingInfo = ""
+
 
 # Checa se a entrada é valida. 
 def entry_checkLetter( ev, widget, linha, nextBox, prevBox ):
@@ -176,27 +176,30 @@ def colorRow( n, guesses ):
 
 def login():
     root = tk.Tk()
-    root.geometry("340x100")
-    root.title('CONECTE-SE AO TERMO')
+    root.geometry("400x100")
+    root.title('CONECTE-SE AO TERMOLIMPIADAS')
+    root.configure(bg='#ffd699')
     root.resizable(0, 0)
+    root.iconbitmap('img/Termolimpiadasicon.png')
+    
     
     # GRID
     root.columnconfigure(0, weight=1)
     root.columnconfigure(1, weight=3)
 
     # Apelido
-    username_label = tk.Label(root, text="Seu apelido (até 10 letras):", fg="red", font=("Consolas", 10, "bold"))
+    username_label = tk.Label(root, text="Seu apelido (até 10 letras):", bg='#ffd699', fg="black", font=("Consolas", 10, "bold"))
     username_label.grid(column=0, row=0, sticky=tk.W, padx=5, pady=5) 
     username_entry = tk.Entry(root)
     username_entry.grid(column=1, row=0, sticky=tk.E, padx=5, pady=5)
     username_entry.bind("<KeyRelease>", lambda event: entry_checkName(event, username_entry))
-    username_entry.insert(0, "Elieder")
+    username_entry.insert(0, "")
 
     # IP
-    IP_label = tk.Label(root, text="IP do servidor:", fg="red", font=("Consolas", 10, "bold"))
+    IP_label = tk.Label(root, text="IP do servidor:", bg='#ffd699', fg="black", font=("Consolas", 10, "bold"))
     IP_label.grid(column=0, row=1, sticky=tk.W, padx=5, pady=5)
     IP_entry = tk.Entry(root)
-    IP_entry.insert(0, "192.168.1.105")
+    IP_entry.insert(0, "")
     IP_entry.grid(column=1, row=1, sticky=tk.E, padx=5, pady=5)
 
     # Botão
