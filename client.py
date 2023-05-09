@@ -180,7 +180,7 @@ def login():
     root.title('CONECTE-SE AO TERMOLIMPIADAS')
     root.configure(bg='#ffd699')
     root.resizable(0, 0)
-    root.iconbitmap('img/Termolimpiadasicon.png')
+    root.iconbitmap('img/Termolimpiadasicon.ico')
     
     
     # GRID
