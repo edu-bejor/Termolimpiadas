@@ -180,7 +180,7 @@ def login():
     root.title('CONECTE-SE AO TERMOLIMPIADAS')
     root.configure(bg='#ffd699')
     root.resizable(0, 0)
-    root.iconbitmap('img/Termolimpiadasicon.ico')
+    root.iconbitmap('img/Termolimpiadasicone.ico')
     
     
     # GRID
@@ -230,6 +230,7 @@ def gameloop():
     root = tk.Tk()
     root.geometry("400x500")
     root.title(client.nome)
+    root.iconbitmap('img/Termolimpiadasicone.ico')
 
     info_label = tk.Label(root, font=("Consolas", 13, "bold"))
     info_label.pack()
