@@ -7,9 +7,9 @@ import threading
 import fsm
 
 fsm = fsm.FiniteStateMachine()
+fsm.createState("help", ["login"])
 fsm.createState("login", ["gameloop", "wait"])
 fsm.createState("gameloop", ["wait"])
-fsm.createState("help", "login")
 fsm.createState("wait", ["gameloop"])
 fsm.changeState("help")
 state = fsm.getState()
@@ -119,7 +119,7 @@ def btn_login_callback( nome, ip ):
         sock.close()
 
 def btn_pronto_callback():
-    login()
+    fsm.changeState("login")
 
 
 # Guarda handlers para cada caixa de texto
@@ -180,7 +180,7 @@ def colorRow( n, guesses ):
 
 def helpScreen():
     root = tk.Tk()
-    root.geometry("400x400")
+    root.geometry("400x300")
     root.title('teste')
     root.configure(bg='#ffd699')
     root.resizable(0, 0)
@@ -191,25 +191,13 @@ def helpScreen():
     root.columnconfigure(0, weight=1)
     root.columnconfigure(1, weight=3)
 
-    # Apelido
-    username_label = tk.Label(root, text="Seu apelido (até 10 letras):", bg='#ffd699', fg="black", font=("Consolas", 10, "bold"))
-    username_label.grid(column=0, row=0, sticky=tk.W, padx=5, pady=5) 
-    username_entry = tk.Entry(root)
-    username_entry.grid(column=1, row=0, sticky=tk.E, padx=5, pady=5)
-    username_entry.bind("<KeyRelease>", lambda event: entry_checkName(event, username_entry))
-    username_entry.insert(0, "")
 
-    # IP
-    IP_label = tk.Label(root, text="IP do servidor:", bg='#ffd699', fg="black", font=("Consolas", 10, "bold"))
-    IP_label.grid(column=0, row=1, sticky=tk.W, padx=5, pady=5)
-    IP_entry = tk.Entry(root)
-    IP_entry.insert(0, "")
-    IP_entry.grid(column=1, row=1, sticky=tk.E, padx=5, pady=5)
+    # Apelido
+    username_label = tk.Label(root, text="Seu apelido (até 10 letras):", bg='#ffd699', fg="black", font=("Consolas", 10, "bold")).pack()
 
     # Botão
-    pronto_button = tk.Button(root, text="ESTOU PRONTO!", \
-        command= lambda: btn_pronto_callback())
-    pronto_button.grid(column=1, row=3, sticky=tk.E, padx=5, pady=5)
+    pronto_button = tk.Button(root, text="ESTOU PRONTO!", command= lambda: btn_pronto_callback()).pack()
+
 
     while True:
         # não fazer tk.mainloop() pois ele bloqueia a execução.
