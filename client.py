@@ -9,8 +9,9 @@ import fsm
 fsm = fsm.FiniteStateMachine()
 fsm.createState("login", ["gameloop", "wait"])
 fsm.createState("gameloop", ["wait"])
+fsm.createState("help", "login")
 fsm.createState("wait", ["gameloop"])
-fsm.changeState("login")
+fsm.changeState("help")
 state = fsm.getState()
 
 class ClienteInfo:
@@ -117,6 +118,9 @@ def btn_login_callback( nome, ip ):
         messagebox.showerror("Erro!", "Servidor cheio, desculpe :(")
         sock.close()
 
+def btn_pronto_callback():
+    login()
+
 
 # Guarda handlers para cada caixa de texto
 cells = []
@@ -174,6 +178,49 @@ def colorRow( n, guesses ):
 ###############################################################
 #### FUNÇÕES DOS ESTADOS DO JOGO ##############################
 
+def helpScreen():
+    root = tk.Tk()
+    root.geometry("400x400")
+    root.title('teste')
+    root.configure(bg='#ffd699')
+    root.resizable(0, 0)
+    root.iconbitmap('img/Termolimpiadasicone.ico')
+    
+    
+    # GRID
+    root.columnconfigure(0, weight=1)
+    root.columnconfigure(1, weight=3)
+
+    # Apelido
+    username_label = tk.Label(root, text="Seu apelido (até 10 letras):", bg='#ffd699', fg="black", font=("Consolas", 10, "bold"))
+    username_label.grid(column=0, row=0, sticky=tk.W, padx=5, pady=5) 
+    username_entry = tk.Entry(root)
+    username_entry.grid(column=1, row=0, sticky=tk.E, padx=5, pady=5)
+    username_entry.bind("<KeyRelease>", lambda event: entry_checkName(event, username_entry))
+    username_entry.insert(0, "")
+
+    # IP
+    IP_label = tk.Label(root, text="IP do servidor:", bg='#ffd699', fg="black", font=("Consolas", 10, "bold"))
+    IP_label.grid(column=0, row=1, sticky=tk.W, padx=5, pady=5)
+    IP_entry = tk.Entry(root)
+    IP_entry.insert(0, "")
+    IP_entry.grid(column=1, row=1, sticky=tk.E, padx=5, pady=5)
+
+    # Botão
+    pronto_button = tk.Button(root, text="ESTOU PRONTO!", \
+        command= lambda: btn_pronto_callback())
+    pronto_button.grid(column=1, row=3, sticky=tk.E, padx=5, pady=5)
+
+    while True:
+        # não fazer tk.mainloop() pois ele bloqueia a execução.
+        # use um loop infinito, e chame root.update()
+        root.update()
+        if fsm.getState() == "login":
+            break
+    
+    root.destroy()
+    login()
+
 def login():
     root = tk.Tk()
     root.geometry("400x100")
@@ -221,6 +268,8 @@ waitingForNewRow = False
 timeMsgToNextWord = ""
 tries = 0
 guesses = ""
+
+
 
 def gameloop():
     global cells, waitingForNewRow, tries, guesses, waitingInfo, timeMsgToNextWord
@@ -280,4 +329,4 @@ def wait():
     root.destroy()
     gameloop()
 
-login()
+helpScreen()
