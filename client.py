@@ -5,6 +5,9 @@ from tkinter import ttk
 from tkinter import messagebox
 import threading
 import fsm
+from tkinter import *
+from PIL import ImageTk
+import PIL.Image
 
 fsm = fsm.FiniteStateMachine()
 fsm.createState("help", ["login"])
@@ -180,24 +183,24 @@ def colorRow( n, guesses ):
 
 def helpScreen():
     root = tk.Tk()
-    root.geometry("400x300")
-    root.title('teste')
-    root.configure(bg='#ffd699')
+    root.geometry("381x430")
+    root.title('Tutorial')
+    root.configure(bg='#ffffff')
     root.resizable(0, 0)
     root.iconbitmap('img/Termolimpiadasicone.ico')
     
     
-    # GRID
-    root.columnconfigure(0, weight=1)
-    root.columnconfigure(1, weight=3)
+    image = open("img/helpteste.jpg","rb")
+    image = PIL.Image.open(image)
+    photo = ImageTk.PhotoImage(image)
 
-
-    # Apelido
-    username_label = tk.Label(root, text="Seu apelido (até 10 letras):", bg='#ffd699', fg="black", font=("Consolas", 10, "bold")).pack()
-
+    label = Label(root, image=photo)
+    label.pack()
+    
+    fonte = ("Arial", 15)
     # Botão
-    pronto_button = tk.Button(root, text="ESTOU PRONTO!", command= lambda: btn_pronto_callback()).pack()
-
+    pronto_button = tk.Button(root, text="ESTOU PRONTO!", font=fonte, command= lambda: btn_pronto_callback())
+    pronto_button.pack()
 
     while True:
         # não fazer tk.mainloop() pois ele bloqueia a execução.
@@ -213,7 +216,6 @@ def login():
     root = tk.Tk()
     root.geometry("400x100")
     root.title('CONECTE-SE AO TERMOLIMPIADAS')
-    root.configure(bg='#ffd699')
     root.resizable(0, 0)
     root.iconbitmap('img/Termolimpiadasicone.ico')
     
@@ -223,7 +225,7 @@ def login():
     root.columnconfigure(1, weight=3)
 
     # Apelido
-    username_label = tk.Label(root, text="Seu apelido (até 10 letras):", bg='#ffd699', fg="black", font=("Consolas", 10, "bold"))
+    username_label = tk.Label(root, text="Seu apelido (até 10 letras):", fg="black", font=("Consolas", 10, "bold"))
     username_label.grid(column=0, row=0, sticky=tk.W, padx=5, pady=5) 
     username_entry = tk.Entry(root)
     username_entry.grid(column=1, row=0, sticky=tk.E, padx=5, pady=5)
@@ -231,7 +233,7 @@ def login():
     username_entry.insert(0, "")
 
     # IP
-    IP_label = tk.Label(root, text="IP do servidor:", bg='#ffd699', fg="black", font=("Consolas", 10, "bold"))
+    IP_label = tk.Label(root, text="IP do servidor:", fg="black", font=("Consolas", 10, "bold"))
     IP_label.grid(column=0, row=1, sticky=tk.W, padx=5, pady=5)
     IP_entry = tk.Entry(root)
     IP_entry.insert(0, "")
@@ -304,6 +306,7 @@ def wait():
     root.geometry("400x200")
     root.title("Aguarde a próxima rodada")
     root.resizable(0, 0)
+    root.iconbitmap('img/Termolimpiadasicone.ico')
 
     info_label = ttk.Label(root, font=("Consolas", 13, "bold"))
     info_label.pack()

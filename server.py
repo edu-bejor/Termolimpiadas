@@ -38,7 +38,7 @@ class GameLogic:
     global fsm
     state = fsm
     word = "TESTE"
-    seg = 80
+    seg = 60
     winner = ""
     clientes = {}
     numClientes = 0
@@ -154,7 +154,7 @@ def gameLogicThread():
                     logic.seg = 9
                     logic.state.changeState("wait")
             else:
-                logic.seg = 80
+                logic.seg = 60
         elif logic.state.getState() == "wait":
             if logic.seg > 0 and not logic.winner == "ninguem":
                 if logic.seg == 8:
@@ -178,7 +178,7 @@ def gameLogicThread():
                 logic.state.changeState("gameloop")
                 logic.word = palavrasValidas[random.randrange(0, len(palavrasValidas))].upper()
                 print("\nIniciando uma nova rodada, palavra alvo: {}".format(logic.word))
-                logic.seg = 80
+                logic.seg = 60
                 svinfo.info = "gameloop"
                 svinfo.code = 200
                 broadcast( svinfo )
